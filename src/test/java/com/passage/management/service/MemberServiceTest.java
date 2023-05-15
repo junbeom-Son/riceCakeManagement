@@ -2,6 +2,7 @@ package com.passage.management.service;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.passage.management.domain.Member;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +15,15 @@ class MemberServiceTest {
 
     @Autowired
     PasswordEncoder passwordEncoder;
+    @Autowired
+    MemberService memberService;
 
     @Test
     void passwordEncodingTest() {
         String rawPassword = "13579";
-        String encodedPassword = passwordEncoder.encode(rawPassword);
-        assertTrue(passwordEncoder.matches(rawPassword, encodedPassword));
+        Member member = new Member();
+        member.setPassword(rawPassword);
+        Member encodedMember = memberService.registerMember(member);
+        assertTrue(passwordEncoder.matches(rawPassword, encodedMember.getPassword()));
     }
 }
