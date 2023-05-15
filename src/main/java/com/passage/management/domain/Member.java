@@ -1,4 +1,4 @@
-package main.java.com.passage.management.domain;
+package com.passage.management.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
