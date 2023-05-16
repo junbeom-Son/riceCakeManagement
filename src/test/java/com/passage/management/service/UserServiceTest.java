@@ -25,4 +25,21 @@ class UserServiceTest {
         User encodedUser = userService.registerMember(user);
         assertTrue(passwordEncoder.matches(rawPassword, encodedUser.getPassword()));
     }
+
+    @Test
+    void registerTest() {
+        String loginId = "test1";
+        String password = "pass1";
+        String address = "해운대";
+        String name = "user1";
+        String phone = "010-4885-4885";
+        User user = new User();
+        user.setLoginId(loginId);
+        user.setPassword(password);
+        user.setAddress(address);
+        user.setName(name);
+        user.setPhone(phone);
+        User savedUser = userService.registerMember(user);
+        assertTrue(passwordEncoder.matches(password, savedUser.getPassword()));
+    }
 }
