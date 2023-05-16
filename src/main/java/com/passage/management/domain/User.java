@@ -40,8 +40,8 @@ public class User implements UserDetails {
         this.phone = phone;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setId(String loginId) {
+        this.loginId = loginId;
     }
 
     public void setPassword(String password) {
