@@ -10,11 +10,11 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor
-public class Member {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long memberId;
+    private Long UserId;
     private String name;
     private String address;
     private String phone;
