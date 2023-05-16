@@ -24,8 +24,22 @@ public class UserService implements UserDetailsService {
         return userRepository.save(user);
     }
 
+    /**
+     * login method
+     * 1. find User by login id
+     * 2. if a user is found by the login id, compare the raw password to the encrypted password
+     * 3. if it matches, return the user object
+     * 4. otherwise, return null
+     * @param loginId
+     * @param password
+     * @return user or null
+     */
     public User login(String loginId, String password) {
-        return userRepository.findByLoginIdAndPassword(loginId, password);
+        User user = userRepository.findByLoginId(loginId);
+        if (user != null && passwordEncoder.matches(password, user.getPassword())) {
+            return user;
+        }
+        return null;
     }
 
     @Override
