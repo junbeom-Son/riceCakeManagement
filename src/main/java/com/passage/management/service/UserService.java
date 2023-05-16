@@ -17,8 +17,11 @@ public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
 
     public User registerMember(User user) {
+        if (userRepository.existsByLoginId(user.getLoginId())) {
+            return null;
+        }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return user;
+        return userRepository.save(user);
     }
 
     public User login(String loginId, String password) {
