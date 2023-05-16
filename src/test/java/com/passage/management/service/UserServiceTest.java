@@ -3,6 +3,7 @@ package com.passage.management.service;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.passage.management.domain.User;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -41,5 +42,14 @@ class UserServiceTest {
         user.setPhone(phone);
         User savedUser = userService.registerMember(user);
         assertTrue(passwordEncoder.matches(password, savedUser.getPassword()));
+    }
+
+    @Test
+    void loginTest() {
+        String loginId = "test1";
+        String password = "pass1";
+        User user = userService.login(loginId, password);
+        assertNotNull(user);
+        assertTrue(passwordEncoder.matches(password, user.getPassword()));
     }
 }
