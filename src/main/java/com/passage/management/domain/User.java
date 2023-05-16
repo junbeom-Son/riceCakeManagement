@@ -40,7 +40,7 @@ public class User implements UserDetails {
         this.phone = phone;
     }
 
-    public void setId(String loginId) {
+    public void setLoginId(String loginId) {
         this.loginId = loginId;
     }
 
