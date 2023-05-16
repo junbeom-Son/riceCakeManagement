@@ -23,7 +23,7 @@ public class User implements UserDetails {
     private String userName;
     private String address;
     private String phone;
-    private String id;
+    private String loginId;
     private String password;
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles;
