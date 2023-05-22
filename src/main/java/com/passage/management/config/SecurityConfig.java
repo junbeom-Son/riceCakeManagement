@@ -12,8 +12,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import static org.springframework.security.config.Customizer.withDefaults;
-
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
@@ -24,6 +22,7 @@ public class SecurityConfig {
         return http
                 .csrf().disable()
                 .httpBasic().disable()
+                .formLogin().disable()
                 .authorizeHttpRequests()
                 .requestMatchers("/test").authenticated()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
