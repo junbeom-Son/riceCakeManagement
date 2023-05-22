@@ -1,6 +1,7 @@
 package com.passage.management.service;
 
 import com.passage.management.domain.User;
+import com.passage.management.dto.LoginDTO;
 import com.passage.management.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -30,13 +31,12 @@ public class UserService implements UserDetailsService {
      * 2. if a user is found by the login id, compare the raw password to the encrypted password
      * 3. if it matches, return the user object
      * 4. otherwise, return null
-     * @param loginId
-     * @param password
+     * @param loginDTO
      * @return user or null
      */
-    public User login(String loginId, String password) {
-        User user = userRepository.findByLoginId(loginId);
-        if (user != null && passwordEncoder.matches(password, user.getPassword())) {
+    public User login(LoginDTO loginDTO) {
+        User user = userRepository.findByLoginId(loginDTO.getLoginId());
+        if (user != null && passwordEncoder.matches(loginDTO.getPassword(), user.getPassword())) {
             return user;
         }
         return null;
@@ -44,6 +44,7 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
+        Long userId = Long.parseLong(username);
+        return userRepository.findById(userId).orElse(null);
     }
 }

@@ -3,6 +3,7 @@ package com.passage.management.service;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.passage.management.domain.User;
+import com.passage.management.dto.LoginDTO;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -57,7 +58,9 @@ class UserServiceTest {
     void loginTest() {
         String loginId = "test1";
         String password = "pass1";
-        User user = userService.login(loginId, password);
+        User user = userService.login(new LoginDTO());
+        user.setLoginId(loginId);
+        user.setPassword(password);
         assertNotNull(user);
         assertTrue(passwordEncoder.matches(password, user.getPassword()));
     }
