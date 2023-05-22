@@ -29,4 +29,10 @@ public class UserController {
         response.setHeader("token", token);
         return token;
     }
+
+    @PostMapping("/join")
+    @ResponseBody
+    public User join(@RequestBody User user) {
+        return userService.registerMember(user);
+    }
 }
