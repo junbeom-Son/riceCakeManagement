@@ -1,9 +1,11 @@
 package com.passage.management.controller;
 
+import com.passage.management.domain.Role;
 import com.passage.management.domain.User;
 import com.passage.management.dto.LoginDTO;
 import com.passage.management.jwt.JwtTokenProvider;
 import com.passage.management.service.UserService;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,11 +21,12 @@ public class UserController {
 
     @PostMapping("/login")
     @ResponseBody
-    public String login(@RequestBody LoginDTO loginDTO) {
-        User user = userService.login(loginDTO.getLoginId(), loginDTO.getPassword());
-        if (user == null) {
-            return "";
-        }
-        return jwtTokenProvider.createToken(user.getUserId(), user.getRoles());
+    public String login(@RequestBody LoginDTO loginDTO, HttpServletResponse response) {
+        User user = userService.login(loginDTO);
+        Role role = user.getRole();
+
+        String token = jwtTokenProvider.createToken(user.getUserId(), user.getRole());
+        response.setHeader("token", token);
+        return token;
     }
 }
