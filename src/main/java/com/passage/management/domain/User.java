@@ -25,8 +25,8 @@ public class User implements UserDetails {
     private String phone;
     private String loginId;
     private String password;
-    @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> roles;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     public void setName(String userName) {
         this.userName = userName;
