@@ -7,6 +7,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,22 +22,22 @@ import java.util.List;
 @Component
 public class JwtTokenProvider {
 
-    private String secretKey = "passageOfLuckRiceCake";
+    private String secretKey;
     private long tokenValidTime = 30 * 60 * 1000L; // 토큰 유효시간 30분
 
     private final UserDetailsService userDetailsService;
 
 
     @PostConstruct
-    protected void init() {
+    protected void init(@Value("${jwt.secret}") String secretKey) {
         // 객체 초기화, secretKey를 Base64로 인코딩
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
 
     // JWT 토큰 생성
-    public String createToken(String userPk, List<String> roles) {
+    public String createToken(Long userPk, List<String> roles) { // String -> Long으로 pk변경
         // JWT payload에 저장되는 정보단위, 보통 여기서 user를 식별하는 값을 넣는다.
-        Claims claims = Jwts.claims().setSubject(userPk);
+        Claims claims = Jwts.claims().setSubject(userPk.toString());
         claims.put("roles", roles);
         Date now = new Date();
         return Jwts.builder()
